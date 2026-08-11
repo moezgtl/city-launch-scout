@@ -151,6 +151,6 @@ class RunStats:
             print(f"    Total          ${self.cost_usd:.4f}")
             if self.cost_per_venue is not None:
                 print(f"    Per venue      ${self.cost_per_venue:.5f}")
-            print(f"    (list price · claude-sonnet-4-6 · mid-2025)")
+            print(f"    (list price · {self.model} · mid-2025)")
 
         print(f"  {sep}\n")
