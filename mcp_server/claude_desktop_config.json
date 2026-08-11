@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "city-launch-scout": {
+      "command": "python3",
+      "args": ["/Users/moezgritli/Desktop/city-launch-scout"],
+      "env": {
+        "ANTHROPIC_API_KEY": "your-key-here",
+        "GOOGLE_PLACES_API_KEY": "your-key-here"
+      }
+    }
+  }
+}

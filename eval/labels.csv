@@ -1,0 +1,15 @@
+> These labels are the intended answers for the SYNTHETIC fixture, written by
+> the person who wrote the fixture reviews. For real venues you must label them
+> yourself — 20 venues takes about 40 minutes and it is the single highest-value
+> 40 minutes in this project. Without labels you have opinions; with labels you
+> have a number you can put in front of an interviewer.
+venue_id,venue_name,dietary_range,conversation_fit,group_readiness,service_quality,atmosphere,note
+syn_011,Jardim de Inverno,3,3,3,3,3,clearly labelled menu; plants absorb noise; merged tables willingly
+syn_002,Horta Verde,3,3,2,3,3,fully veg but small and kitchen slows when full
+syn_001,Taberna do Real,2,3,3,3,3,veg mains exist but menu is meat-led; strong on everything else
+syn_004,Casa da Carne,0,3,3,3,2,steakhouse; a vegetarian can order a side of vegetables and nothing else
+syn_010,Tasca Lenta,2,3,1,0,2,repeated forgotten orders and a lost reservation is a pattern
+syn_014,Adega Familiar,2,2,3,3,3,tiles echo when full but reviews say never uncomfortable
+syn_013,Cozinha Comum,3,2,3,2,3,loud at nine but reviewers say you can still talk
+syn_003,Bar Alto Rooftop,1,0,1,2,2,sharing plates not dinner; DJ makes conversation impossible
+syn_012,Balcao Cinco,1,2,0,3,3,standing wine bar with eight stools and no bookings

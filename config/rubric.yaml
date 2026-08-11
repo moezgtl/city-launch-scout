@@ -1,0 +1,82 @@
+# City Launch Scout — venue rubric
+#
+# Everything in `hard_filters` is evaluated in CODE, never by the LLM.
+# These are Timeleft's publicly stated, objectively checkable criteria.
+# If a venue fails any of these it is rejected before we spend a token on it.
+#
+# Everything in `scored_dimensions` is a judgement call. That is the LLM's job,
+# and every score it produces must come back with a justification and the
+# evidence it used, so a city manager can audit the decision.
+
+version: "0.1.0"
+
+hard_filters:
+  # Timeleft publicly states a 4.3 Google minimum.
+  min_rating: 4.3
+
+  # Guards against a 4.9 built on eleven reviews. Not a published Timeleft
+  # number — this is our own reliability floor. Tune it per market: in a small
+  # city 150 may be too aggressive.
+  min_review_count: 150
+
+  # Google price_level, 1-4. Reviews repeatedly mention people being seated at
+  # venues above their budget, so the band is deliberately narrow.
+  allowed_price_levels: [2, 3]
+
+  # Distance from the zone centroid, in metres.
+  max_distance_from_zone_m: 1200
+
+  require_operational: true
+
+  # Unknown (null) is tolerated — many venues simply don't publish this.
+  # Only an explicit "false" rejects.
+  require_reservations: false
+
+scored_dimensions:
+  dietary_range:
+    weight: 0.25
+    question: >
+      Can a table of six with mixed diets — at least one vegetarian, often one
+      vegan, usually several meat eaters — all order a real main course they
+      would be happy with? Not a token salad.
+  conversation_fit:
+    weight: 0.30
+    question: >
+      Can six strangers seated at one table actually hear each other for two
+      hours? Consider noise, music volume, acoustics, table spacing, and
+      whether the room is built for lingering or for turning tables fast.
+  group_readiness:
+    weight: 0.20
+    question: >
+      Can they seat six at a single table, do they honour reservations, and do
+      they handle split bills without friction? Evidence of hosting groups well
+      matters more than stated capacity.
+  service_quality:
+    weight: 0.15
+    question: >
+      Is service consistent and warm, or do reviews show a pattern of long
+      waits, forgotten orders, or indifference? One bad night is noise; a
+      pattern is signal.
+  atmosphere:
+    weight: 0.10
+    question: >
+      Is the room warm and welcoming to a group who have never met? Somewhere
+      that makes a first hello easier rather than harder.
+
+# Score scale used for every dimension.
+score_scale:
+  0: "Disqualifying — clear evidence this fails for a Timeleft table"
+  1: "Weak — would work at a push, expect complaints"
+  2: "Good — no concerns"
+  3: "Excellent — actively a reason to pick this venue"
+
+# Weighted score out of 100 maps to a verdict.
+verdict_thresholds:
+  shortlist: 72
+  backup: 55
+  # below `backup` => reject
+
+# If the LLM cannot find evidence for a dimension it must return null rather
+# than guessing. Too many nulls and we flag the venue for manual review instead
+# of silently scoring it low.
+max_unscored_dimensions: 2

@@ -1,0 +1,492 @@
+{
+  "_comment": "SYNTHETIC DATA. Hand-written to mirror the shape of a Google Places API (New) searchText response. No real venue data, no real reviews, no scraping. Used so the pipeline runs end-to-end with no API key and so the eval harness has a stable input.",
+  "zone": {
+    "city": "Lisbon",
+    "name": "Principe Real",
+    "centroid": {
+      "latitude": 38.7167,
+      "longitude": -9.15
+    },
+    "country": "Portugal"
+  },
+  "places": [
+    {
+      "id": "syn_001",
+      "displayName": "Taberna do Real",
+      "formattedAddress": "R. da Escola Politecnica 42, Lisboa",
+      "location": {
+        "latitude": 38.7171,
+        "longitude": -9.1487
+      },
+      "rating": 4.6,
+      "userRatingCount": 820,
+      "priceLevel": 2,
+      "businessStatus": "OPERATIONAL",
+      "reservable": true,
+      "primaryType": "portuguese_restaurant",
+      "editorialSummary": "Warm neighbourhood tavern serving petiscos and slow-cooked mains in a wood-lined room.",
+      "reviews": [
+        {
+          "rating": 5,
+          "text": "Came with seven friends and they put us on the big table at the back. We were there nearly three hours and nobody rushed us once."
+        },
+        {
+          "rating": 5,
+          "text": "The vegetarian options are not an afterthought here, the mushroom rice is better than most of the meat dishes."
+        },
+        {
+          "rating": 4,
+          "text": "Music is at a sensible level so you can actually have a conversation. Rare in this neighbourhood."
+        },
+        {
+          "rating": 5,
+          "text": "Booked for six, table was ready, they split the bill six ways without blinking."
+        },
+        {
+          "rating": 4,
+          "text": "Service warm and unhurried. Wine list is short but everything on it is good."
+        }
+      ],
+      "nationalPhoneNumber": "+351 21 000 0001"
+    },
+    {
+      "id": "syn_002",
+      "displayName": "Horta Verde",
+      "formattedAddress": "Praca das Flores 8, Lisboa",
+      "location": {
+        "latitude": 38.7156,
+        "longitude": -9.1512
+      },
+      "rating": 4.7,
+      "userRatingCount": 610,
+      "priceLevel": 2,
+      "businessStatus": "OPERATIONAL",
+      "reservable": true,
+      "primaryType": "vegetarian_restaurant",
+      "editorialSummary": "Vegetable-led kitchen with a small counter and a bright dining room off the square.",
+      "reviews": [
+        {
+          "rating": 5,
+          "text": "Everything is vegetarian and half the menu is vegan, clearly marked. My carnivore boyfriend ate everything and asked to come back."
+        },
+        {
+          "rating": 5,
+          "text": "Quiet enough to talk properly, tables are well spaced."
+        },
+        {
+          "rating": 4,
+          "text": "They took our group of six on a Wednesday with no fuss. Only downside, the kitchen slows down when it fills up."
+        },
+        {
+          "rating": 5,
+          "text": "Staff explained every dish. Felt looked after rather than processed."
+        },
+        {
+          "rating": 4,
+          "text": "Good for groups but book ahead, it is small and fills fast."
+        }
+      ],
+      "nationalPhoneNumber": "+351 21 000 0002"
+    },
+    {
+      "id": "syn_003",
+      "displayName": "Bar Alto Rooftop",
+      "formattedAddress": "R. do Seculo 110, Lisboa",
+      "location": {
+        "latitude": 38.7159,
+        "longitude": -9.1479
+      },
+      "rating": 4.5,
+      "userRatingCount": 1240,
+      "priceLevel": 2,
+      "businessStatus": "OPERATIONAL",
+      "reservable": true,
+      "primaryType": "bar",
+      "editorialSummary": "Rooftop bar with DJ sets most evenings and a short sharing menu.",
+      "reviews": [
+        {
+          "rating": 5,
+          "text": "Incredible view and the DJ was on form, we danced until close."
+        },
+        {
+          "rating": 3,
+          "text": "Had to shout at the person next to me all night. Impossible to have a conversation after nine."
+        },
+        {
+          "rating": 4,
+          "text": "Food is snacks really, a few sharing plates, not a proper dinner."
+        },
+        {
+          "rating": 2,
+          "text": "Music so loud we gave up and left. Went for dinner, got a nightclub."
+        },
+        {
+          "rating": 5,
+          "text": "Great atmosphere if you want a party. Not somewhere to catch up with people."
+        }
+      ],
+      "nationalPhoneNumber": null
+    },
+    {
+      "id": "syn_004",
+      "displayName": "Casa da Carne",
+      "formattedAddress": "R. da Imprensa Nacional 20, Lisboa",
+      "location": {
+        "latitude": 38.7178,
+        "longitude": -9.1519
+      },
+      "rating": 4.5,
+      "userRatingCount": 430,
+      "priceLevel": 3,
+      "businessStatus": "OPERATIONAL",
+      "reservable": true,
+      "primaryType": "steak_house",
+      "editorialSummary": "Dry-aged beef and open-fire cooking in a converted townhouse.",
+      "reviews": [
+        {
+          "rating": 5,
+          "text": "Best steak I have had in Lisbon, the aged ribeye is worth the price."
+        },
+        {
+          "rating": 2,
+          "text": "Came with a vegetarian friend and the only thing she could order was a side of grilled vegetables. Embarrassing."
+        },
+        {
+          "rating": 4,
+          "text": "Room is calm and the acoustics are good, we could all hear each other."
+        },
+        {
+          "rating": 5,
+          "text": "Took our table of six upstairs, service was attentive throughout."
+        },
+        {
+          "rating": 3,
+          "text": "Fine if everyone eats meat. Otherwise look elsewhere, there is basically nothing."
+        }
+      ],
+      "nationalPhoneNumber": "+351 21 000 0004"
+    },
+    {
+      "id": "syn_005",
+      "displayName": "Cantinho Rapido",
+      "formattedAddress": "R. Nova da Piedade 3, Lisboa",
+      "location": {
+        "latitude": 38.7149,
+        "longitude": -9.1495
+      },
+      "rating": 4.1,
+      "userRatingCount": 290,
+      "priceLevel": 2,
+      "businessStatus": "OPERATIONAL",
+      "reservable": false,
+      "primaryType": "restaurant",
+      "editorialSummary": "Fast, cheap lunch spot with a rotating daily menu.",
+      "reviews": [
+        {
+          "rating": 4,
+          "text": "Good value, in and out in half an hour."
+        },
+        {
+          "rating": 3,
+          "text": "Fine but nothing special, feels like a canteen."
+        }
+      ],
+      "nationalPhoneNumber": null
+    },
+    {
+      "id": "syn_006",
+      "displayName": "Mesa Escondida",
+      "formattedAddress": "Tv. do Monte do Carmo 5, Lisboa",
+      "location": {
+        "latitude": 38.7162,
+        "longitude": -9.1508
+      },
+      "rating": 4.9,
+      "userRatingCount": 38,
+      "priceLevel": 3,
+      "businessStatus": "OPERATIONAL",
+      "reservable": true,
+      "primaryType": "restaurant",
+      "editorialSummary": "Ten-seat chef's counter, one tasting menu nightly.",
+      "reviews": [
+        {
+          "rating": 5,
+          "text": "A jewel. Booked three months ahead and worth every minute of the wait."
+        },
+        {
+          "rating": 5,
+          "text": "Only ten seats, the chef cooks in front of you."
+        }
+      ],
+      "nationalPhoneNumber": "+351 21 000 0006"
+    },
+    {
+      "id": "syn_007",
+      "displayName": "Sala Dourada",
+      "formattedAddress": "R. da Rosa 200, Lisboa",
+      "location": {
+        "latitude": 38.7154,
+        "longitude": -9.1471
+      },
+      "rating": 4.8,
+      "userRatingCount": 520,
+      "priceLevel": 4,
+      "businessStatus": "OPERATIONAL",
+      "reservable": true,
+      "primaryType": "fine_dining_restaurant",
+      "editorialSummary": "Tasting-menu restaurant with a wine pairing programme.",
+      "reviews": [
+        {
+          "rating": 5,
+          "text": "Exceptional from start to finish. Expensive but a genuine occasion."
+        },
+        {
+          "rating": 5,
+          "text": "Six courses, three hours, faultless service."
+        }
+      ],
+      "nationalPhoneNumber": "+351 21 000 0007"
+    },
+    {
+      "id": "syn_008",
+      "displayName": "Petisqueira do Bairro",
+      "formattedAddress": "R. de Campo de Ourique 88, Lisboa",
+      "location": {
+        "latitude": 38.7196,
+        "longitude": -9.1701
+      },
+      "rating": 4.6,
+      "userRatingCount": 740,
+      "priceLevel": 2,
+      "businessStatus": "OPERATIONAL",
+      "reservable": true,
+      "primaryType": "portuguese_restaurant",
+      "editorialSummary": "Busy petisqueira with a long communal table.",
+      "reviews": [
+        {
+          "rating": 5,
+          "text": "The communal table is perfect for groups, we met the people next to us."
+        },
+        {
+          "rating": 4,
+          "text": "Plenty for vegetarians, the grilled vegetable petiscos are excellent."
+        }
+      ],
+      "nationalPhoneNumber": null
+    },
+    {
+      "id": "syn_009",
+      "displayName": "O Forno Velho",
+      "formattedAddress": "R. do Salitre 15, Lisboa",
+      "location": {
+        "latitude": 38.7185,
+        "longitude": -9.1494
+      },
+      "rating": 4.4,
+      "userRatingCount": 380,
+      "priceLevel": 2,
+      "businessStatus": "CLOSED_PERMANENTLY",
+      "reservable": true,
+      "primaryType": "pizza_restaurant",
+      "editorialSummary": "Wood-fired pizza in a former bakery.",
+      "reviews": [
+        {
+          "rating": 5,
+          "text": "Sad to see it go, the best pizza in the neighbourhood for years."
+        }
+      ],
+      "nationalPhoneNumber": "+351 21 000 0009"
+    },
+    {
+      "id": "syn_010",
+      "displayName": "Tasca Lenta",
+      "formattedAddress": "R. da Palmeira 31, Lisboa",
+      "location": {
+        "latitude": 38.7174,
+        "longitude": -9.1526
+      },
+      "rating": 4.4,
+      "userRatingCount": 465,
+      "priceLevel": 2,
+      "businessStatus": "OPERATIONAL",
+      "reservable": true,
+      "primaryType": "portuguese_restaurant",
+      "editorialSummary": "Small tasca with daily specials chalked on the wall.",
+      "reviews": [
+        {
+          "rating": 5,
+          "text": "Food is genuinely lovely, proper home cooking."
+        },
+        {
+          "rating": 2,
+          "text": "Waited forty minutes for mains and they forgot one entirely. Second time this has happened."
+        },
+        {
+          "rating": 3,
+          "text": "Charming room but the service is chaotic when they are busy, which is always."
+        },
+        {
+          "rating": 4,
+          "text": "Quiet and easy to talk. There are two vegetarian mains which is fine."
+        },
+        {
+          "rating": 2,
+          "text": "Booked for five, arrived to find no reservation on the book. They squeezed us in eventually."
+        }
+      ],
+      "nationalPhoneNumber": "+351 21 000 0010"
+    },
+    {
+      "id": "syn_011",
+      "displayName": "Jardim de Inverno",
+      "formattedAddress": "R. de Sao Marcal 70, Lisboa",
+      "location": {
+        "latitude": 38.7161,
+        "longitude": -9.1483
+      },
+      "rating": 4.6,
+      "userRatingCount": 950,
+      "priceLevel": 2,
+      "businessStatus": "OPERATIONAL",
+      "reservable": true,
+      "primaryType": "mediterranean_restaurant",
+      "editorialSummary": "Glass-roofed dining room with plants and a Mediterranean menu.",
+      "reviews": [
+        {
+          "rating": 5,
+          "text": "The winter garden room is beautiful and surprisingly quiet given how full it was."
+        },
+        {
+          "rating": 5,
+          "text": "Menu is split clearly between vegan, vegetarian and meat. Everyone in our group found something."
+        },
+        {
+          "rating": 4,
+          "text": "We were eight and they merged two tables without us asking twice."
+        },
+        {
+          "rating": 5,
+          "text": "Servers were patient with a group who took forever to order. Lovely evening."
+        },
+        {
+          "rating": 4,
+          "text": "Gets busy at eight but the noise never becomes a problem, the plants soak it up."
+        }
+      ],
+      "nationalPhoneNumber": "+351 21 000 0011"
+    },
+    {
+      "id": "syn_012",
+      "displayName": "Balcao Cinco",
+      "formattedAddress": "R. da Alegria 12, Lisboa",
+      "location": {
+        "latitude": 38.7169,
+        "longitude": -9.1466
+      },
+      "rating": 4.7,
+      "userRatingCount": 310,
+      "priceLevel": 2,
+      "businessStatus": "OPERATIONAL",
+      "reservable": false,
+      "primaryType": "wine_bar",
+      "editorialSummary": "Standing wine bar with a handful of stools and a short plate menu.",
+      "reviews": [
+        {
+          "rating": 5,
+          "text": "Wonderful wine list, the owner knows every bottle."
+        },
+        {
+          "rating": 4,
+          "text": "Mostly standing, there are maybe eight stools total. Not a sit-down dinner place."
+        },
+        {
+          "rating": 5,
+          "text": "Great for two, impossible for a group. We tried with five and gave up."
+        },
+        {
+          "rating": 4,
+          "text": "No bookings, first come first served."
+        }
+      ],
+      "nationalPhoneNumber": null
+    },
+    {
+      "id": "syn_013",
+      "displayName": "Cozinha Comum",
+      "formattedAddress": "R. do Vale 44, Lisboa",
+      "location": {
+        "latitude": 38.7145,
+        "longitude": -9.1504
+      },
+      "rating": 4.5,
+      "userRatingCount": 680,
+      "priceLevel": 2,
+      "businessStatus": "OPERATIONAL",
+      "reservable": true,
+      "primaryType": "restaurant",
+      "editorialSummary": "Seasonal menu, open kitchen, long shared tables down the middle of the room.",
+      "reviews": [
+        {
+          "rating": 5,
+          "text": "Shared tables mean you end up talking to strangers, which we loved."
+        },
+        {
+          "rating": 4,
+          "text": "Three vegetarian mains and one vegan, clearly labelled."
+        },
+        {
+          "rating": 4,
+          "text": "It does get loud around nine when the open kitchen is at full tilt, but you can still talk."
+        },
+        {
+          "rating": 5,
+          "text": "They handled our group of six well, one bill split without complaint."
+        },
+        {
+          "rating": 4,
+          "text": "Service is friendly if occasionally slow to notice you."
+        }
+      ],
+      "nationalPhoneNumber": "+351 21 000 0013"
+    },
+    {
+      "id": "syn_014",
+      "displayName": "Adega Familiar",
+      "formattedAddress": "R. da Bela Vista 9, Lisboa",
+      "location": {
+        "latitude": 38.7158,
+        "longitude": -9.1521
+      },
+      "rating": 4.8,
+      "userRatingCount": 1120,
+      "priceLevel": 3,
+      "businessStatus": "OPERATIONAL",
+      "reservable": true,
+      "primaryType": "portuguese_restaurant",
+      "editorialSummary": "Family-run adega, tiled dining room, cooking from the north of Portugal.",
+      "reviews": [
+        {
+          "rating": 5,
+          "text": "Felt like being fed by someone's grandmother. Warmest welcome we have had in Lisbon."
+        },
+        {
+          "rating": 5,
+          "text": "Large table at the back took our nine people comfortably."
+        },
+        {
+          "rating": 4,
+          "text": "Meat heavy but there were two proper vegetarian mains and they offered to adapt a third."
+        },
+        {
+          "rating": 5,
+          "text": "Room is tiled so it echoes a little when full, but never uncomfortable."
+        },
+        {
+          "rating": 5,
+          "text": "Service could not have been kinder, they remembered us from a previous visit."
+        }
+      ],
+      "nationalPhoneNumber": "+351 21 000 0014"
+    }
+  ]
+}
