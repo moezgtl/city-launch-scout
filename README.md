@@ -1,159 +1,134 @@
 # City Launch Scout
 
-Finds and vets candidate restaurants for Timeleft dinners in a given
-neighbourhood, scores them against a written rubric, and drafts a first-contact
-email for each one worth approaching.
+Automated venue scouting and vetting for Timeleft's city launches — built as an
+application project for the Automation Engineer role.
 
-```bash
-pip install -r requirements.txt
-make demo     # runs offline against synthetic data, no API keys needed
-make eval     # scores that run against human labels
-```
+## The problem
 
----
+When Timeleft opens a new city, someone has to find restaurants that work for
+six strangers sharing a table for two hours: a room quiet enough to hear each
+other, a menu with a real vegetarian option, a layout that can seat a group
+who've never met. Doing that by hand means reading through dozens of Google
+listings and reviews per neighbourhood — most of which won't qualify.
 
-## For the team: what this is, when it runs, who to call
-
-**What it does.** You give it a city and a neighbourhood. It comes back with a
-ranked shortlist of restaurants that would suit a Timeleft table — six strangers,
-one table, two hours on a weeknight — with a reason for every score and a draft
-email for the ones worth contacting.
-
-**What it does not do.** It does not contact anybody. Every email is a draft
-that a person reads and sends. It does not make the final call on a venue; it
-makes the first pass so you spend your time on the ten that might work instead
-of the sixty that won't.
-
-**When it runs.** On demand, when a city or neighbourhood is being opened. It is
-not scheduled — venue scouting happens in bursts, and a nightly run would just
-produce noise.
-
-**What it costs.** Roughly a cent or two of model spend and a couple of minutes
-per neighbourhood, plus Google Places calls. Every run prints its own token
-count and runtime.
-
-**When it breaks.** The two likely failures are an expired Google Places key
-(you'll see `Places search failed after 3 attempts`) and an empty shortlist. An
-empty shortlist usually is not a bug — it means the neighbourhood genuinely has
-few venues clearing a 4.3 rating with 150+ reviews in the €€–€€€ band. Widen the
-radius or lower the review floor in `config/rubric.yaml` and rerun.
-
-**Who to call.** [your name / your Slack handle]
-
----
+City Launch Scout automates the first pass. Give it a city and a
+neighbourhood; it comes back with a ranked, evidence-backed shortlist and a
+draft outreach email for each venue worth contacting. It doesn't decide and it
+doesn't send anything — it turns sixty candidates into ten a human actually
+needs to look at.
 
 ## How it works
 
 ```
-discover  →  hard filters  →  scoring  →  outreach drafts  →  report
-(Places)     (pure Python)    (Claude)     (Claude)           (JSON + HTML)
+discover  →  hard filters  →  score  →  outreach drafts  →  report
+(Places)     (pure Python)    (LLM)      (LLM)              (JSON + HTML)
 ```
 
-The important design decision is the split between stages two and three.
+1. **Discover** — pull candidate venues from Google Places for the target zone.
+2. **Hard filters** — reject on rating, review count, price band, distance,
+   operational status. Deterministic, in code, no LLM involved.
+3. **Score** — an LLM reads review text and scores the things that need
+   judgement: conversation fit, dietary range, group-friendliness. Every score
+   comes with a justification.
+4. **Outreach** — draft a first-contact email for each shortlisted venue.
+5. **Report** — a self-contained HTML file, JSON, and markdown, all timestamped
+   per run.
 
-**Hard filters run in code.** Rating, review count, price band, distance from
-the zone centre, operational status. These have right answers. A language model
-asked to apply a 4.3 threshold will mostly get it right, which is worse than
-always getting it right, because the failures are invisible. And when a city
-manager asks why a venue was rejected, the answer needs to be
-`rating 4.1 below 4.3`, not a paragraph.
+## Key engineering decisions
 
-**The rubric is scored by judgement.** Whether six people can hear each other,
-whether a vegetarian has a real main course, whether the room welcomes a group
-who have never met. There is no threshold for these. Every score comes back with
-a justification and the evidence it rests on, so a rejection can be audited in
-ten seconds.
+**Deterministic filters, judgement-based scoring.** Anything with a right
+answer — a 4.3 rating threshold, a review-count floor — runs in plain Python,
+not an LLM. A model asked to apply a threshold will *mostly* get it right,
+which is worse than reliably right, because the failures are invisible and
+unauditable. The LLM is reserved for calls that genuinely require reading
+review text, where there's no clean numeric threshold to write.
 
-Both stages read `config/rubric.yaml`. Thresholds and weights live there so they
-can be tuned without touching Python — a 150-review floor is right for Lisbon
-and much too aggressive for a city that opened last month.
+**Two-model cost strategy.** Scoring runs once per venue (high volume, lower
+stakes per call) and uses Haiku. Outreach only runs for the 2–5 shortlisted
+venues per run, where quality matters more than cost, and uses Sonnet. Cost is
+tracked per model and surfaced in every run's summary — not a single blended
+estimate.
 
-Rejected venues are kept and shown, never silently dropped. A tool that throws
-things away without saying so is a tool nobody trusts twice.
+**Parallelised scoring.** Venues are scored concurrently via a thread pool
+rather than sequentially, so a run of 20 venues doesn't take 20x as long as a
+run of one.
+
+**Observability by default.** Every run tracks timings per stage, token usage,
+API call counts, and cost — printed to the terminal and embedded in the HTML
+report. Rejected venues are kept and shown with their rejection reason, never
+silently dropped, so a city manager (or a reviewer of this project) can audit
+any decision in seconds rather than trusting a black box.
+
+## Quickstart
+
+```bash
+pip install -r requirements.txt
+python3 -m src.run --mock     # offline demo against synthetic data, no API keys needed
+```
+
+Opens a full shortlist report (`out/*.html`) with fake data in seconds. For a
+real run against live Google Places and Anthropic APIs — getting API keys,
+finding coordinates, everything — see **[SETUP.md](SETUP.md)**.
 
 ## Outputs
 
 | File | For |
 |---|---|
-| `out/shortlist.html` | The thing a city manager actually opens. Ranked cards, evidence behind every score, accept/pass buttons, exports decisions as JSON. Single file, no server. |
-| `out/shortlist.json` | Feeds Sheets, Notion, or the eval harness. |
-| `out/outreach_drafts.md` | Draft emails, one per shortlisted venue. Drafts only. |
+| `out/*.html` | Ranked shortlist, evidence behind every score. Single file, no server. |
+| `out/*.json` | Feeds Sheets, Notion, or the eval harness. |
+| `out/*.md` | Draft outreach emails, one per shortlisted venue — drafts only, never sent automatically. |
 
-## Measuring it
+## Technical details
 
-The scorer is judged against hand-written labels in `eval/labels.csv`:
+<details>
+<summary>Rubric-driven config, failure handling, and evaluation</summary>
+
+**Config, not code.** Both filter thresholds and scoring dimensions/weights
+live in `config/rubric.yaml`, tunable without touching Python — a 150-review
+floor that's right for Lisbon is too aggressive for a city that opened last
+month.
+
+**Failure handling**
+
+| Failure | Behaviour |
+|---|---|
+| Places API 429/5xx | Three retries with backoff, then a clear error. 4xx is not retried. |
+| Model call fails on one venue | Marked `error`, run continues — one bad venue doesn't lose the rest. |
+| Model returns prose around its JSON | Fences stripped, outermost object extracted. |
+| No evidence for a dimension | Returns `null` rather than guessing; too many nulls flags the venue `review` instead of scoring it low. |
+| Nothing passes the filters | Says so, and says which filter to loosen. Never relaxes thresholds on its own. |
+
+**Measuring accuracy.** The scorer is judged against hand-written labels in
+`eval/labels.csv`:
 
 ```bash
 python eval/run_eval.py --run out/shortlist.json
 ```
 
-Two numbers, and they are not the same. **Dimension agreement** is how often the
-scorer picks the same 0–3 as a human. **Verdict agreement** is how often it
-reaches the same shortlist/backup/reject call — the one that changes what
-somebody does, and the one to quote.
+Reports dimension agreement (does it pick the same 0–3 as a human) and verdict
+agreement (does it reach the same shortlist/backup/reject call) separately —
+verdict agreement is the number that changes what someone does.
 
-False shortlists are tracked separately from missed venues, because they cost
-different amounts. A missed good venue costs nothing much; you had sixty
-candidates. A false shortlist costs an outreach email and possibly a real dinner
-in a room where six people cannot hear each other.
-
-### Baseline
-
-The offline stub is a keyword heuristic, not a model. It exists so the pipeline
-runs with no keys, and it doubles as the baseline worth beating:
-
-```
-                    exact    ±1   mean err
-ALL                   53%   89%      0.58
-Verdict agreement:  5/9 = 56%
-False shortlists:   2
-```
-
-Its failures are the classic bag-of-words ones and they are worth looking at
-before you write your prompt:
-
-- **Casa da Carne** — a steakhouse where the only vegetarian option is a side of
-  grilled vegetables — scores 2/3 on dietary range, because the word
-  "vegetarian" appears in a review complaining about the lack of it.
-- **Adega Familiar** scores 0/3 on conversation fit because a review says the
-  tiled room "echoes a little when full" — and the same sentence says "but never
-  uncomfortable".
-
-Both are failures of reading rather than of knowledge, which is exactly the gap
-a model closes. Run the same eval live and the delta is your result.
-
-## Live runs
-
-```bash
-cp .env.example .env    # add ANTHROPIC_API_KEY and GOOGLE_PLACES_API_KEY
-python -m src.run --city "Lisbon" --zone "Principe Real" --lat 38.7167 --lng -9.15
-```
-
-Useful flags: `--query "wine bar"` to bias discovery, `--max-results`,
-`--no-outreach`, `--sender "Your Name"`.
-
-## Failure modes and what happens
-
-| Failure | Behaviour |
-|---|---|
-| Places API 429 or 5xx | Three retries with backoff, then a clear error. 4xx is not retried — that's our bug, and retrying burns quota. |
-| Model call fails on one venue | That venue is marked `error` and the run continues. One bad venue does not lose the other nineteen. |
-| Model returns prose around its JSON | Fences stripped, outermost object extracted. |
-| No evidence for a dimension | Returns `null` rather than guessing. Too many nulls and the venue is flagged `review` for a human instead of being silently scored low. |
-| Missing price level | Not disqualifying. Flagged in the report rather than dropping a venue that might be perfect. |
-| Nothing passes the filters | Says so, and says which filter to loosen. Never relaxes thresholds on its own. |
-
-## As a Skill
-
-`skill/SKILL.md` wraps the whole thing so a non-technical city manager can ask
-for it in plain language — "find me venues in Príncipe Real" — rather than
+**As a Skill.** `skill/SKILL.md` wraps the whole pipeline so a non-technical
+city manager can ask for it in plain language via Claude Desktop, rather than
 running a CLI.
 
-## Notes
+**Data.** All bundled fixture data is synthetic — no real venue data, no
+scraped reviews. Live runs use the official Google Places API within its
+terms. Nothing in this repo sends an email, writes to a CRM, or takes any
+action in the world; it produces drafts and a shortlist, and a person decides.
 
-All bundled data is synthetic. `data/fixtures/` was hand-written to mirror the
-shape of a Places response; no real venue data, no real reviews, nothing
-scraped. Live runs use the official Google Places API within its terms.
+</details>
 
-Nothing in this repo sends an email, writes to a CRM, or takes any action in the
-world. It produces drafts and a shortlist, and a person decides.
+## Known limitations
+
+- Google returns ~8 reviews per venue, chosen by *its* relevance ranking, not
+  ours — a venue with 700 reviews is scored on 8. Reviews are further
+  truncated to 80 words each.
+- `eval/labels.csv` is synthetic. The baseline against the keyword stub was
+  53% dimension exact-match, 56% verdict agreement — those numbers mean little
+  until real venues are hand-labelled.
+- `places.py` uses Text Search, not the newer Nearby Search (New). Swap is
+  pending.
+- Claude Desktop's default MCP timeout is 60s; this repo's config sets it to
+  600s to accommodate a full scouting run.
