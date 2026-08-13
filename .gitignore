@@ -3,3 +3,4 @@ out/
 __pycache__/
 *.pyc
 .DS_Store
+mcp_server/claude_desktop_config.json
