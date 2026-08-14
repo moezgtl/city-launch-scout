@@ -107,3 +107,31 @@ to keep costs down.
 3. If it touches scoring, `eval/run_eval.py` doesn't regress
 4. If Claude Desktop is involved, note that a full Cmd+Q restart is required —
    the MCP server loads code once at startup
+
+## Decisions log
+
+`DECISIONS.md` records *why* a choice was made, not just what changed —
+commit messages already cover the "what". If you make a non-trivial
+implementation choice with a real alternative (a library, an architecture
+change, a tradeoff between cost/speed/quality, etc.), **stop and ask the
+user whether to add an entry to DECISIONS.md** before finishing the task.
+Don't write the entry yourself without asking — the reasoning should be
+confirmed by the user, not inferred.
+
+## Decisions log
+
+`DECISIONS.md` at the repo root records *why* a choice was made, not just
+what changed — commit messages already cover the "what."
+
+If you (Claude Code) make a non-trivial implementation choice with a real
+alternative on the table — a library, an algorithm, a tradeoff between
+cost/speed/quality, a data format — **don't write the entry yourself.**
+Instead, tell the user what the choice was and why, and ask them to log it
+in DECISIONS.md, or offer to draft an entry for them to review before it's
+added. The reasoning usually lives in conversation, not in the diff, so a
+self-written entry from git history alone tends to be thin. A short prompt
+back to the user is enough:
+
+> This involved choosing X over Y because Z — worth a DECISIONS.md entry?
+
+Trivial changes (typos, formatting, one obvious bug fix) don't need this.
