@@ -57,3 +57,21 @@ reduces the chance of repeating that class of mistake.
 ---
 
 <!-- Add new entries above this line, most recent first -->
+
+## 2026-08-14 — Branch protection + Dependabot on the repo
+
+**Decision:** Enabled branch protection rulesets on `main` (require PR
+before merging, block force pushes and deletion) and Dependabot alerts +
+security updates + malware alerts.
+
+**Why:** Everything up to this point relied on remembering to follow the
+PR workflow manually — nothing actually enforced it. GitHub's classic
+branch protection doesn't enforce on free-tier private repos, so we used
+the newer ruleset system instead, which does. Dependabot is a standard,
+zero-cost safeguard against known vulnerabilities in dependencies (only
+`requests` and `PyYAML` today, but the habit matters more than the current
+surface area).
+
+**Alternative considered:** Skip this and rely on self-discipline for PRs —
+rejected, since the whole point of tooling like this is to make good
+practice the default rather than something to remember.
