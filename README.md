@@ -1,7 +1,7 @@
 # City Launch Scout
 
 Automated venue scouting and vetting for Timeleft's city launches — built as an
-application project for the Automation Engineer role.
+application project.
 
 ## The problem
 
