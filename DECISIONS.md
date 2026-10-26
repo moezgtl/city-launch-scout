@@ -75,3 +75,39 @@ surface area).
 **Alternative considered:** Skip this and rely on self-discipline for PRs —
 rejected, since the whole point of tooling like this is to make good
 practice the default rather than something to remember.
+
+---
+
+## 2026-10-26 — Making the repo public after a pre-flight cleanup
+
+**Decision:** Before switching the repo to public so an interviewer can
+browse it, ran a cleanup on a separate branch (`chore/public-preflight`):
+untracked `src.bak/` and the committed `.DS_Store` files, replaced personal
+home-directory paths in docs with generic ones, fixed the MCP config
+example, and added a sample report. Two follow-on choices:
+
+1. **Left `.DS_Store` files in git history instead of rewriting it.** A
+   history audit found no `.env`, no `out/` run reports, and no secrets
+   (gitleaks scanned 13 commits at the time of the scan, all clean). The
+   `.DS_Store` files are harmless macOS folder metadata.
+2. **Published a mock-generated sample report** (`docs/sample_report.html`)
+   rather than a real run's output.
+
+**Why:** Real run reports in `out/` contain Google Places data (venue names,
+phone numbers) that shouldn't be published. The audit confirmed none were ever
+committed, which meant history was safe as it stood. Rewriting history would
+have meant force-pushing and invalidating existing clones and PR references,
+which is real risk for no real gain when nothing sensitive is in it. A
+mock-mode report uses the synthetic Lisbon fixture, so visitors can see what
+the tool produces without any real venue data leaving the machine.
+
+**Alternatives considered:**
+- Rewrite history with `git filter-repo` to purge `.DS_Store` files —
+  rejected: cosmetic benefit only, and force-pushing is risky and
+  hard to undo.
+- Publish a real run as the sample — rejected: more convincing output, but
+  it would publish third-party business data, and it can't be un-published
+  once the repo is public and indexed.
+- Keep the repo private and share access with the interviewer — rejected:
+  the interviewer would need a GitHub account and would have to accept an
+  invite, whereas a public link works for anyone, even on a phone.

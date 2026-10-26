@@ -25,7 +25,7 @@ pwd
 
 You'll see something like:
 ```
-/Users/moezgritli/Desktop/city-launch-scout
+~/Desktop/city-launch-scout
 ```
 
 Copy that. You'll need it in the next step.
@@ -56,7 +56,7 @@ If the file is empty, paste this in — replacing the path with YOUR path from S
   "mcpServers": {
     "city-launch-scout": {
       "command": "python3",
-      "args": ["/Users/moezgritli/Desktop/city-launch-scout/mcp_server/server.py"]
+      "args": ["/path/to/city-launch-scout/mcp_server/server.py"]
     }
   }
 }

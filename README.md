@@ -3,6 +3,10 @@
 Automated venue scouting and vetting for Timeleft's city launches — built as an
 application project.
 
+**See a sample report:** [docs/sample_report.html](docs/sample_report.html) —
+generated from synthetic Lisbon data in mock mode (no real venues, no API
+calls). Download it and open it in a browser.
+
 ## The problem
 
 When Timeleft opens a new city, someone has to find restaurants that work for
